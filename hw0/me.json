@@ -1,0 +1,15 @@
+{
+    "name": {
+        "first": "Jiawei",
+        "last": "Zhang"
+    },
+    "fromWisconsin": false,
+    "numCridits": 20,
+    "major": "Electrical and Computer Engineering",
+    "interests": [
+        "Robotics",
+        "Reinforcement Learning",
+        "Generative AI",
+        "Indie development"        
+    ]
+}
