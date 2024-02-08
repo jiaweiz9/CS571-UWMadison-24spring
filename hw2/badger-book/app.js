@@ -3,6 +3,47 @@ function buildStudents(studs) {
 	//      fetching the data or performing a search. It should populate the
 	//      index.html with student data by using createElement and appendChild.
 	document.getElementById("num-results").innerText = studs.length;
+	const students = document.getElementById("students")
+	for(const student of studs) {
+		const studentInfo = document.createElement("div");
+		studentInfo.className = "col-12 col-md-6 col-lg-4 col-xl-3 student-info";
+
+		// Add student name to studentInfo
+		const studentName = document.createElement("h2");
+		const name = student.name.first + " " + student.name.last;
+		studentName.innerText = name;
+		studentInfo.appendChild(studentName);
+
+		// Add student major to studentInfo
+		const studentMajor = document.createElement("p");
+		studentMajor.innerText = "Major: " + student.major;
+		studentInfo.appendChild(studentMajor);
+
+		// Add student credit hours to studentInfo
+		const studentCredits = document.createElement("p");
+		studentCredits.innerText = "Credit hours: " + student.numCredits;
+		studentInfo.appendChild(studentCredits);
+
+		// Add student backroundInfo to studentInfo
+		const studentBackground = document.createElement("p");
+		studentBackground.innerText = name + " is" + `${student.fromWisconsin ? " " : " not"}` + "from Wisconsin";
+		studentInfo.appendChild(studentBackground);
+
+		// Add interests to studentInfo
+		const studentInterestsTitle = document.createElement("p");
+		studentInterestsTitle.innerText = "Interests:";
+		studentInfo.appendChild(studentInterestsTitle);
+		const studentInterests = document.createElement("ul");
+		for(const interest of student.interests) {
+			const interestItem = document.createElement("li");
+			interestItem.innerText = interest;
+			studentInterests.appendChild(interestItem);
+		}
+		studentInfo.appendChild(studentInterests);
+
+		// Add studentInfo to students
+		students.appendChild(studentInfo);
+	}
 	
 }
 
