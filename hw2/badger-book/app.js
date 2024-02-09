@@ -37,6 +37,15 @@ function buildStudents(studs) {
 		for(const interest of student.interests) {
 			const interestItem = document.createElement("li");
 			interestItem.innerText = interest;
+
+			// Add click listener to interestItem
+			interestItem.addEventListener("click", (e) => {
+				const selectedText = e.target.innerText;
+				// TODO update the search terms to search just for the
+				//      selected interest, and re-run the search!
+				document.getElementById("search-interest").value = selectedText;
+			})
+
 			studentInterests.appendChild(interestItem);
 		}
 		studentInfo.appendChild(studentInterests);
@@ -62,11 +71,84 @@ function handleSearch(e) {
 			throw new Error();
 		}
 	}).then(data => {
-		console.log(data);
-		buildStudents(data);
+		// console.log(data);
+		document.getElementById("students").innerHTML = "";
+		let search_name = document.getElementById("search-name").value;
+		let search_major = document.getElementById("search-major").value;
+		let search_interest = document.getElementById("search-interest").value;
+		
+		let filteredData = data.filter(stu => {
+			console.log(search_name);
+			if (search_name === "") {
+				return true;
+			}
+			search_name = search_name.trim().toLowerCase();
+			stu_name = (stu.name.first + " " + stu.name.last).toLowerCase();
+			return stu_name.includes(search_name);
+		});
+
+		filteredData = filteredData.filter(stu => {
+			console.log(search_major);
+			if (search_major === "") {
+				return true;
+			}
+			search_major = search_major.trim().toLowerCase();
+			stu_major = stu.major.toLowerCase();
+			return stu_major.includes(search_major);
+		});
+
+		filteredData = filteredData.filter(stu => {
+			console.log(search_interest);
+			if (search_interest === "") {
+				return true;
+			}
+			search_interest = search_interest.trim().toLowerCase();
+			for(const interest of stu.interests) {
+				if(interest.toLowerCase().includes(search_interest)) {
+					return true;
+				}
+			}
+		return false;
+		});
+		console.log(filteredData);
+		buildStudents(filteredData);
 	}).catch(err => {
 		console.log(err);
 	})
 }
+
+// function searchNameCallback(stu, search_name) {
+// 	console.log(search_name);
+// 	if (search_name === "") {
+// 		return true;
+// 	}
+// 	search_name = search_name.trim().toLowerCase();
+// 	stu_name = (stu.name.first + " " + stu.name.last).toLowerCase();
+// 	return stu_name.includes(search_name);
+// }
+
+// function searchMajorCallback(stu, search_major) {
+// 	console.log(search_major);
+// 	if (search_major === "") {
+// 		return true;
+// 	}
+// 	search_major = search_major.trim().toLowerCase();
+// 	stu_major = stu.major.toLowerCase();
+// 	return stu_major.includes(search_major);
+// }
+
+// function searchInterestCallback(stu, search_interest) {
+// 	console.log(search_interest);
+// 	if (search_interest === "") {
+// 		return true;
+// 	}
+// 	search_interest = search_interest.trim().toLowerCase();
+// 	for(const interest of stu.interests) {
+// 		if(interest.toLowerCase().includes(search_interest)) {
+// 			return true;
+// 		}
+// 	}
+// 	return false;
+// }
 
 document.getElementById("search-btn").addEventListener("click", handleSearch);
