@@ -1,10 +1,17 @@
 export default function BadgerSaleItem(props) {
-    return <div>
+    quantity, setQuantity = useState(0);
+
+    return <div style={props.featured ? null : "color: red"}>
         <h2>{props.name}</h2>
+        <p>{props.description}</p>
+        <p>{props.price}</p>
         <div>
-            <button className="inline">-</button>
-            <p className="inline">0</p>
-            <button className="inline">+</button>
+            <button className="inline" 
+                    onClick={setQuantity(quantity-1)}
+                    disabled={quantity == 0}>-</button>
+            <p className="inline">{quantity}</p>
+            <button className="inline" 
+                    onClick={setQuantity(quantity+1)}>+</button>
         </div>
     </div>
 }

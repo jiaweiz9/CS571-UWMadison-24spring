@@ -19,9 +19,24 @@ export default function BadgerMart(props) {
         })
     }, [])
 
+    const [featuredItem, setFeaturedItem] = useState({});
+    useEffect(() => {
+        fetch("https://cs571.org/api/s24/hw3/featured-sale-item", {
+            headers: {
+                "X-CS571-ID": CS571.getBadgerId()
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            setFeaturedItem(data);
+        })
+    }, [])
+
     return <div>
         <h1>Badger Mart</h1>
         <p>Welcome to our small-town mini mart located in Madison, WI!</p>
+        {featuredItem ? <p>Today's feature is {featuredItem.name} for {featuredItem.price}</p> : <p>Loading</p>}
         <Container>
             <Row>
             {
