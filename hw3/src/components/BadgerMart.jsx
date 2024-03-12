@@ -5,6 +5,7 @@ import { Col, Container, Row } from "react-bootstrap";
 export default function BadgerMart(props) {
 
     const [saleItems, setSaleItems] = useState([]);
+    const [featuredItem, setFeaturedItem] = useState({});
 
     useEffect(() => {
         fetch("https://cs571.org/api/s24/hw3/all-sale-items", {
@@ -17,9 +18,8 @@ export default function BadgerMart(props) {
             console.log(data);
             setSaleItems(data);
         })
-    }, [])
+    }, []);
 
-    const [featuredItem, setFeaturedItem] = useState({});
     useEffect(() => {
         fetch("https://cs571.org/api/s24/hw3/featured-sale-item", {
             headers: {
@@ -31,12 +31,12 @@ export default function BadgerMart(props) {
             console.log(data);
             setFeaturedItem(data);
         })
-    }, [])
+    }, []);
 
     return <div>
         <h1>Badger Mart</h1>
         <p>Welcome to our small-town mini mart located in Madison, WI!</p>
-        {featuredItem ? <p>Today's feature is {featuredItem.name} for {featuredItem.price}</p> : <p>Loading</p>}
+        {featuredItem ? <p>Today's feature is {featuredItem.name} for ${featuredItem.price}! </p> : <p>Loading</p>}
         <Container>
             <Row>
             {
