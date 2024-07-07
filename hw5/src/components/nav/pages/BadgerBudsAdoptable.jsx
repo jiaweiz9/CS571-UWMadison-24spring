@@ -1,6 +1,9 @@
+import { useContext } from "react"
+import BadgerBudsDataContext from "../../../contexts/BadgerBudsDataContext"
+import BadgerBudsSummary from "../../BadgerBudsSummary"
+
 export default function BadgerBudsAdoptable(props) {
-    return <div>
-        <h1>Available Badger Buds</h1>
-        <p>The following cats are looking for a loving home! Could you help?</p>
-    </div>
+    let data = useContext(BadgerBudsDataContext)
+    console.log("adoptable", data)
+    return <BadgerBudsSummary />
 }
